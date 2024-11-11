@@ -1,5 +1,5 @@
 import styled from "styled-components";
 
-export const MainLayoutStyled = styled.main`
+export const StyledMainLayout = styled.main`
 	position: relative;
 `;

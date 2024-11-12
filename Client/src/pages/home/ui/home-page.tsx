@@ -4,7 +4,7 @@ import { NewsletterSignUpForm } from "@features/newsletter-sign-up-form/ui";
 
 import { MainLayout } from "@widgets/layouts/main/ui";
 
-import { HomePageTitle } from "./styles";
+import { HomePageTitle, HomePageWrapper } from "./styles";
 
 export const HomePage: FC = () => {
 	return (
@@ -12,7 +12,9 @@ export const HomePage: FC = () => {
 			<HomePageTitle className="visually-hidden">
 				Newsletter sign-up form with success message
 			</HomePageTitle>
-			<NewsletterSignUpForm />
+			<HomePageWrapper>
+				<NewsletterSignUpForm />
+			</HomePageWrapper>
 		</MainLayout>
 	);
 };

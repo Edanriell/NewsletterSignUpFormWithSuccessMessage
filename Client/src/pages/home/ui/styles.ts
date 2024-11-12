@@ -12,3 +12,15 @@ export const HomePageTitle = styled.h1`
 	clip: rect(0 0 0 0);
 	overflow: hidden;
 `;
+
+export const HomePageWrapper = styled.div`
+	position: relative;
+
+	@media (width >= 1440px) {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		min-height: 100vh;
+	}
+`;

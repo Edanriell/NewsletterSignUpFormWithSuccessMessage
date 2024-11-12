@@ -2,6 +2,16 @@ import styled from "styled-components";
 
 export const StyledNewsletterSignUpForm = styled.article`
 	position: relative;
+
+	@media (width >= 1440px) {
+		border-radius: 36rem;
+		max-width: 928rem;
+		box-shadow: 0 15rem 60rem 0 rgba(0, 0, 0, 0.25);
+		background: var(--white);
+		display: flex;
+		flex-direction: row-reverse;
+		overflow: hidden;
+	}
 `;
 
 export const NewsletterSignUpFormImage = styled.div`
@@ -12,10 +22,22 @@ export const NewsletterSignUpFormImage = styled.div`
 	height: 284rem;
 	background: linear-gradient(225deg, #ff6a3a 0%, #ff527b 100%);
 	overflow: hidden;
+
+	@media (width >= 1440px) {
+		margin: 24rem;
+		max-width: 400rem;
+		max-height: 593rem;
+		height: 100%;
+		border-radius: 16rem;
+	}
 `;
 
 export const NewsletterSignUpFormContent = styled.div`
 	padding: 40rem 24rem;
+
+	@media (width >= 1440px) {
+		padding: 97rem 40rem 98rem 64rem;
+	}
 `;
 
 export const NewsletterSignUpFormTitle = styled.h2`
@@ -25,6 +47,10 @@ export const NewsletterSignUpFormTitle = styled.h2`
 	line-height: 100%;
 	color: var(--dark-navy);
 	margin-bottom: 24rem;
+
+	@media (width >= 1440px) {
+		font-size: 56rem;
+	}
 `;
 
 export const NewsletterSignUpFormText = styled.p`
@@ -126,6 +152,6 @@ export const Button = styled.button`
 	font-size: 16rem;
 	line-height: 150%;
 	color: var(--white);
-	padding: 16rem 0 14rem 0;
+	padding: 18rem 0 14rem 0;
 	cursor: pointer;
 `;

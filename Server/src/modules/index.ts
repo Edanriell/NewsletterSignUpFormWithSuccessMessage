@@ -1,1 +1,1 @@
-export * from "./messages/notifications.module";
+export * from "./newsletters/notifications.module";

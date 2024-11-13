@@ -7,12 +7,7 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Message {
-    id               Int    @id @default(autoincrement())
-    firstName        String
-    lastName         String
-    emailAddress     String
-    queryType        String
-    message          String
-    serviceAgreement String
+model Newsletter {
+    id           Int    @id @default(autoincrement())
+    emailAddress String
 }

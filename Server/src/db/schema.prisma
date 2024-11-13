@@ -9,5 +9,5 @@ datasource db {
 
 model Newsletter {
     id           Int    @id @default(autoincrement())
-    emailAddress String
+    emailAddress String @unique
 }

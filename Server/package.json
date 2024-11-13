@@ -4,7 +4,10 @@
 	"description": "",
 	"author": "",
 	"private": true,
-	"license": "UNLICENSED",
+	"license": "MIT",
+	"prisma": {
+		"schema": "src/db/schema.prisma"
+	},
 	"scripts": {
 		"start:build": "cross-env NODE_ENV=production nest build",
 		"start:format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

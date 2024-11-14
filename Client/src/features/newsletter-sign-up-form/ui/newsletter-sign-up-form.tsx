@@ -18,6 +18,7 @@ import {
 	SignUpFormLegend,
 	StyledNewsletterSignUpForm
 } from "./styles";
+import { createNewsletter } from "@features/newsletter-sign-up-form/api";
 
 const NewsletterSignUpFormSvgImage: FC = () => {
 	const { width } = useWindowSize();
@@ -734,6 +735,10 @@ const NewsletterSignUpFormSubscriptionBenefitsListCheckmarkIcon: FC = () => {
 };
 
 export const NewsletterSignUpForm: FC = () => {
+	const handleSignUpFormSubmit = async () => {
+		const response = await createNewsletter({ emailAddress });
+	};
+
 	return (
 		<StyledNewsletterSignUpForm>
 			<NewsletterSignUpFormImage>
@@ -758,7 +763,7 @@ export const NewsletterSignUpForm: FC = () => {
 						And much more!
 					</NewsletterSignUpFormSubscriptionBenefitsListItem>
 				</NewsletterSignUpFormSubscriptionBenefitsList>
-				<SignUpForm>
+				<SignUpForm onSubmit={handleSignUpFormSubmit}>
 					<SignUpFormFieldset>
 						<SignUpFormLegend>Subscribe to the Newsletter</SignUpFormLegend>
 						<SignUpFormField>

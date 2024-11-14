@@ -1,6 +1,10 @@
 import { FC, Fragment } from "react";
+import { Field, Form, Formik, FormikHelpers } from "formik";
 
 import { useWindowSize } from "@shared/lib/hooks";
+
+import { SignUpFormSchema } from "../model";
+import styles from "./styles.module.less";
 
 import {
 	Button,
@@ -10,15 +14,16 @@ import {
 	NewsletterSignUpFormSubscriptionBenefitsListItem,
 	NewsletterSignUpFormText,
 	NewsletterSignUpFormTitle,
-	SignUpForm,
-	SignUpFormEmailInput,
 	SignUpFormField,
 	SignUpFormFieldset,
 	SignUpFormLabel,
 	SignUpFormLegend,
 	StyledNewsletterSignUpForm
 } from "./styles";
-import { createNewsletter } from "@features/newsletter-sign-up-form/api";
+
+type SignUpFormValues = {
+	emailAddress: string;
+};
 
 const NewsletterSignUpFormSvgImage: FC = () => {
 	const { width } = useWindowSize();
@@ -735,8 +740,16 @@ const NewsletterSignUpFormSubscriptionBenefitsListCheckmarkIcon: FC = () => {
 };
 
 export const NewsletterSignUpForm: FC = () => {
-	const handleSignUpFormSubmit = async () => {
-		const response = await createNewsletter({ emailAddress });
+	const initialSignUpFormValues: SignUpFormValues = { emailAddress: "" };
+
+	const handleSignUpFormSubmit = (
+		values: SignUpFormValues,
+		actions: FormikHelpers<{ emailAddress: string }>
+	) => {
+		console.log({ values, actions });
+		alert(JSON.stringify(values, null, 2));
+		// await createNewsletter({ emailAddress });
+		actions.setSubmitting(false);
 	};
 
 	return (
@@ -763,21 +776,33 @@ export const NewsletterSignUpForm: FC = () => {
 						And much more!
 					</NewsletterSignUpFormSubscriptionBenefitsListItem>
 				</NewsletterSignUpFormSubscriptionBenefitsList>
-				<SignUpForm onSubmit={handleSignUpFormSubmit}>
-					<SignUpFormFieldset>
-						<SignUpFormLegend>Subscribe to the Newsletter</SignUpFormLegend>
-						<SignUpFormField>
-							<SignUpFormLabel htmlFor="email">Email address</SignUpFormLabel>
-							<SignUpFormEmailInput
-								id="email"
-								name="email"
-								type="email"
-								placeholder="email@company.com"
-							/>
-						</SignUpFormField>
-						<Button type="submit">Subscribe to monthly newsletter</Button>
-					</SignUpFormFieldset>
-				</SignUpForm>
+				<Formik
+					initialValues={initialSignUpFormValues}
+					onSubmit={handleSignUpFormSubmit}
+					validationSchema={SignUpFormSchema}
+				>
+					{({ errors, touched }) => (
+						<Form>
+							<SignUpFormFieldset>
+								<SignUpFormLegend>Subscribe to the Newsletter</SignUpFormLegend>
+								<SignUpFormField>
+									<SignUpFormLabel htmlFor="emailAddress">Email address</SignUpFormLabel>
+									<Field
+										id="emailAddress"
+										name="emailAddress"
+										type="email"
+										placeholder="email@company.com"
+										className={styles["sign-up-form-email-input"]}
+									/>
+									{errors.emailAddress && touched.emailAddress ? (
+										<div>{errors.emailAddress}</div>
+									) : null}
+								</SignUpFormField>
+								<Button type="submit">Subscribe to monthly newsletter</Button>
+							</SignUpFormFieldset>
+						</Form>
+					)}
+				</Formik>
 			</NewsletterSignUpFormContent>
 		</StyledNewsletterSignUpForm>
 	);

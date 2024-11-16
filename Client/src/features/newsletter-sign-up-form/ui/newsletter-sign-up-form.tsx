@@ -1,5 +1,7 @@
 import { FC, Fragment } from "react";
 import { Form, Formik, FormikHelpers } from "formik";
+
+import { Input } from "@shared/ui/input/ui";
 import { useWindowSize } from "@shared/lib/hooks";
 
 import { SignUpFormSchema } from "../model";
@@ -19,7 +21,6 @@ import {
 	SignUpFormLegend,
 	StyledNewsletterSignUpForm
 } from "./styles";
-import { Input } from "@shared/ui/email-input/ui";
 
 type SignUpFormValues = {
 	emailAddress: string;

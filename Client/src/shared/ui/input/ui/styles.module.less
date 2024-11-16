@@ -22,6 +22,18 @@
 		transition: color 0.2s cubic-bezier(.455, .03, .515, .955);
 		will-change: color;
 	}
+
+	&:hover {
+		border: 1rem solid var(--dark-navy);
+	}
+
+	&:active {
+		border: 1rem solid var(--dark-navy);
+	}
+
+	&:focus {
+		border: 1rem solid var(--dark-navy);
+	}
 }
 
 .email-input--state--invalid {
@@ -47,5 +59,17 @@
 		opacity: 0.5;
 		transition: color 0.2s cubic-bezier(.455, .03, .515, .955);
 		will-change: color;
+	}
+
+	&:hover {
+		border: 1rem solid hsl(4, 100%, 37%);
+	}
+
+	&:active {
+		border: 1rem solid hsl(4, 100%, 37%);
+	}
+
+	&:focus {
+		border: 1rem solid hsl(4, 100%, 37%);
 	}
 }

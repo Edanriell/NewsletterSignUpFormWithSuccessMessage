@@ -4,11 +4,11 @@ import { Form, Formik, FormikHelpers } from "formik";
 import { Input } from "@shared/ui/input/ui";
 import { useWindowSize } from "@shared/lib/hooks";
 
+import styles from "./styles.module.less";
 import { SignUpFormSchema } from "../model";
 
 import {
 	Button,
-	ErrorMessage,
 	NewsletterSignUpFormContent,
 	NewsletterSignUpFormImage,
 	NewsletterSignUpFormSubscriptionBenefitsList,
@@ -21,6 +21,7 @@ import {
 	SignUpFormLegend,
 	StyledNewsletterSignUpForm
 } from "./styles";
+import { AnimatePresence, motion } from "framer-motion";
 
 type SignUpFormValues = {
 	emailAddress: string;
@@ -795,9 +796,19 @@ export const NewsletterSignUpForm: FC = () => {
 										placeholder="email@company.com"
 										isInputValid={!(errors.emailAddress && touched.emailAddress)}
 									/>
-									{errors.emailAddress && touched.emailAddress ? (
-										<ErrorMessage>{errors.emailAddress}</ErrorMessage>
-									) : null}
+									<AnimatePresence>
+										{errors.emailAddress && touched.emailAddress ? (
+											<motion.p
+												initial={{ opacity: 0, x: -10 }}
+												animate={{ opacity: 1, x: 0 }}
+												exit={{ opacity: 0, x: -10 }}
+												transition={{ type: "spring", duration: 0.2, bounce: 0 }}
+												className={styles["error-message"]}
+											>
+												{errors.emailAddress}
+											</motion.p>
+										) : null}
+									</AnimatePresence>
 								</SignUpFormField>
 								<Button type="submit">Subscribe to monthly newsletter</Button>
 							</SignUpFormFieldset>

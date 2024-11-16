@@ -1,10 +1,8 @@
 import { FC, Fragment } from "react";
-import { Field, Form, Formik, FormikHelpers } from "formik";
-
+import { Form, Formik, FormikHelpers } from "formik";
 import { useWindowSize } from "@shared/lib/hooks";
 
 import { SignUpFormSchema } from "../model";
-import styles from "./styles.module.less";
 
 import {
 	Button,
@@ -21,6 +19,7 @@ import {
 	SignUpFormLegend,
 	StyledNewsletterSignUpForm
 } from "./styles";
+import { Input } from "@shared/ui/email-input/ui";
 
 type SignUpFormValues = {
 	emailAddress: string;
@@ -788,16 +787,12 @@ export const NewsletterSignUpForm: FC = () => {
 								<SignUpFormLegend>Subscribe to the Newsletter</SignUpFormLegend>
 								<SignUpFormField>
 									<SignUpFormLabel htmlFor="emailAddress">Email address</SignUpFormLabel>
-									<Field
+									<Input
 										id="emailAddress"
 										name="emailAddress"
 										type="email"
 										placeholder="email@company.com"
-										className={
-											errors.emailAddress && touched.emailAddress
-												? styles["sign-up-form-email-input--state--invalid"]
-												: styles["sign-up-form-email-input"]
-										}
+										isInputValid={!(errors.emailAddress && touched.emailAddress)}
 									/>
 									{errors.emailAddress && touched.emailAddress ? (
 										<ErrorMessage>{errors.emailAddress}</ErrorMessage>

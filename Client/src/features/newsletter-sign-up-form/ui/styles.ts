@@ -110,6 +110,7 @@ export const SignUpFormField = styled.div`
 	flex-direction: column;
 	row-gap: 8rem;
 	margin-bottom: 24rem;
+	position: relative;
 `;
 
 export const SignUpFormLabel = styled.label`
@@ -154,4 +155,15 @@ export const Button = styled.button`
 	color: var(--white);
 	padding: 18rem 0 14rem 0;
 	cursor: pointer;
+`;
+
+export const ErrorMessage = styled.p`
+	font-family: var(--font-family), sans-serif;
+	font-weight: 700;
+	font-size: 12rem;
+	line-height: 150%;
+	color: var(--vermellion);
+	position: absolute;
+	top: 0;
+	right: 0;
 `;

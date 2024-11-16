@@ -8,6 +8,7 @@ import styles from "./styles.module.less";
 
 import {
 	Button,
+	ErrorMessage,
 	NewsletterSignUpFormContent,
 	NewsletterSignUpFormImage,
 	NewsletterSignUpFormSubscriptionBenefitsList,
@@ -792,10 +793,14 @@ export const NewsletterSignUpForm: FC = () => {
 										name="emailAddress"
 										type="email"
 										placeholder="email@company.com"
-										className={styles["sign-up-form-email-input"]}
+										className={
+											errors.emailAddress && touched.emailAddress
+												? styles["sign-up-form-email-input--state--invalid"]
+												: styles["sign-up-form-email-input"]
+										}
 									/>
 									{errors.emailAddress && touched.emailAddress ? (
-										<div>{errors.emailAddress}</div>
+										<ErrorMessage>{errors.emailAddress}</ErrorMessage>
 									) : null}
 								</SignUpFormField>
 								<Button type="submit">Subscribe to monthly newsletter</Button>

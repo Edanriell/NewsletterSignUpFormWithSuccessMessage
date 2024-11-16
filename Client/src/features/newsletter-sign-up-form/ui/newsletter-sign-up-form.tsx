@@ -1,6 +1,8 @@
 import { FC, Fragment } from "react";
 import { Form, Formik, FormikHelpers } from "formik";
+import { AnimatePresence, motion } from "framer-motion";
 
+import { Button } from "@shared/ui/button/ui";
 import { Input } from "@shared/ui/input/ui";
 import { useWindowSize } from "@shared/lib/hooks";
 
@@ -8,7 +10,6 @@ import styles from "./styles.module.less";
 import { SignUpFormSchema } from "../model";
 
 import {
-	Button,
 	NewsletterSignUpFormContent,
 	NewsletterSignUpFormImage,
 	NewsletterSignUpFormSubscriptionBenefitsList,
@@ -21,7 +22,6 @@ import {
 	SignUpFormLegend,
 	StyledNewsletterSignUpForm
 } from "./styles";
-import { AnimatePresence, motion } from "framer-motion";
 
 type SignUpFormValues = {
 	emailAddress: string;

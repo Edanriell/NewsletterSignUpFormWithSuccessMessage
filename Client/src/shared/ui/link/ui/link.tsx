@@ -12,14 +12,16 @@ type LinkProps = {
 export const Link: FC<LinkProps> = ({ href, target, children }) => {
 	return (
 		<motion.a
-			initial={{ background: "linear-gradient(225deg, #242742 0%, #242742 100%)" }}
+			initial={{ background: "linear-gradient(225deg, #fff 0%, #fff 100%)" }}
 			whileHover={{
 				scale: 1.05,
+				color: "#fff",
 				background: "linear-gradient(225deg, #ff6a3a 0%, #ff527b 100%)",
 				boxShadow: "0 16px 32px 0 rgba(255, 97, 85, 0.5)"
 			}}
 			whileTap={{
 				scale: 0.95,
+				color: "#fff",
 				background: "linear-gradient(225deg, #ff6a3a 0%, #ff527b 100%)",
 				boxShadow: "0 16px 32px 0 rgba(255, 97, 85, 0.5)"
 			}}

@@ -1,4 +1,6 @@
+import type { ComponentPropsWithoutRef } from "react";
 import { FC, ReactNode } from "react";
+import type { MotionProps } from "framer-motion";
 import { motion } from "framer-motion";
 
 import styles from "./styles.module.less";
@@ -6,11 +8,13 @@ import styles from "./styles.module.less";
 type ButtonProps = {
 	type?: "submit" | "reset" | "button";
 	children?: ReactNode;
-};
+} & ComponentPropsWithoutRef<"button"> &
+	MotionProps;
 
-export const Button: FC<ButtonProps> = ({ type = "button", children }) => {
+export const Button: FC<ButtonProps> = ({ type = "button", children, ...rest }) => {
 	return (
 		<motion.button
+			{...rest}
 			initial={{ background: "linear-gradient(225deg, #242742 0%, #242742 100%)" }}
 			whileHover={{
 				scale: 1.05,

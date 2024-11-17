@@ -6,7 +6,8 @@ import { Button } from "@shared/ui/button/ui";
 import { Input } from "@shared/ui/input/ui";
 import { useWindowSize } from "@shared/lib/hooks";
 
-import styles from "./styles.module.less";
+import { createNewsletter } from "../api";
+import { extractErrorMessage } from "../lib/functions";
 import { SignUpFormSchema } from "../model";
 
 import {
@@ -22,7 +23,7 @@ import {
 	SignUpFormLegend,
 	StyledNewsletterSignUpForm
 } from "./styles";
-import { createNewsletter } from "@features/newsletter-sign-up-form/api";
+import styles from "./styles.module.less";
 
 type SignUpFormValues = {
 	emailAddress: string;
@@ -746,6 +747,7 @@ export const NewsletterSignUpForm: FC = () => {
 	const [signUpFormState, setSignUpFormState] = useState<"idle" | "submitted" | "unsubmitted">(
 		"idle"
 	);
+	const [errorMessage, setErrorMessage] = useState<string>("");
 
 	const initialSignUpFormValues: SignUpFormValues = { emailAddress: "" };
 
@@ -753,7 +755,8 @@ export const NewsletterSignUpForm: FC = () => {
 		if (signUpFormState === "unsubmitted") {
 			setTimeout(() => {
 				setSignUpFormState("idle");
-			}, 2500);
+				setErrorMessage("");
+			}, 3000);
 		}
 	}, [signUpFormState]);
 
@@ -768,7 +771,7 @@ export const NewsletterSignUpForm: FC = () => {
 			setSignUpFormState("submitted");
 		} catch (error) {
 			setSignUpFormState("unsubmitted");
-			console.error(error);
+			setErrorMessage(extractErrorMessage((error as Error).message));
 		} finally {
 			actions.setSubmitting(false);
 		}
@@ -837,7 +840,7 @@ export const NewsletterSignUpForm: FC = () => {
 													transition={{ type: "spring", duration: 0.3, bounce: 0 }}
 													className={styles["error-message"]}
 												>
-													Could not submit form. Try again latter.
+													{errorMessage}
 												</motion.p>
 											)}
 									</AnimatePresence>

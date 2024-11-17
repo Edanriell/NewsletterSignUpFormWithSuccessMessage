@@ -62,15 +62,12 @@ export class NewslettersService {
 				`Newsletter with Email ${emailAddress} is already in the database.`,
 				NewslettersService.name
 			);
-			throw new NotFoundException(
-				`Newsletter with Email ${emailAddress} is already registered.`,
-				{
-					cause: new Error(
-						`Newsletter with Email ${emailAddress} is already created in the database.`
-					),
-					description: `Newsletter with Email ${emailAddress} is already created in the database. Please choose another email and try again.`
-				}
-			);
+			throw new NotFoundException(`Email is already submitted.`, {
+				cause: new Error(
+					`Newsletter with Email ${emailAddress} is already created in the database.`
+				),
+				description: `Newsletter with Email ${emailAddress} is already created in the database. Please choose another email and try again.`
+			});
 		}
 
 		const newNewsletter = await this.prisma.newsletter.create({

@@ -1,4 +1,4 @@
-import { FC, Fragment } from "react";
+import { FC, Fragment, useEffect, useState } from "react";
 import { Form, Formik, FormikHelpers } from "formik";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -22,6 +22,7 @@ import {
 	SignUpFormLegend,
 	StyledNewsletterSignUpForm
 } from "./styles";
+import { createNewsletter } from "@features/newsletter-sign-up-form/api";
 
 type SignUpFormValues = {
 	emailAddress: string;
@@ -742,16 +743,35 @@ const NewsletterSignUpFormSubscriptionBenefitsListCheckmarkIcon: FC = () => {
 };
 
 export const NewsletterSignUpForm: FC = () => {
+	const [signUpFormState, setSignUpFormState] = useState<"idle" | "submitted" | "unsubmitted">(
+		"idle"
+	);
+
 	const initialSignUpFormValues: SignUpFormValues = { emailAddress: "" };
 
-	const handleSignUpFormSubmit = (
+	useEffect(() => {
+		if (signUpFormState === "unsubmitted") {
+			setTimeout(() => {
+				setSignUpFormState("idle");
+			}, 2500);
+		}
+	}, [signUpFormState]);
+
+	const handleSignUpFormSubmit = async (
 		values: SignUpFormValues,
 		actions: FormikHelpers<{ emailAddress: string }>
 	) => {
-		console.log({ values, actions });
-		alert(JSON.stringify(values, null, 2));
-		// await createNewsletter({ emailAddress });
-		actions.setSubmitting(false);
+		try {
+			const { emailAddress } = values;
+			await createNewsletter({ emailAddress });
+
+			setSignUpFormState("submitted");
+		} catch (error) {
+			setSignUpFormState("unsubmitted");
+			console.error(error);
+		} finally {
+			actions.setSubmitting(false);
+		}
 	};
 
 	return (
@@ -783,7 +803,7 @@ export const NewsletterSignUpForm: FC = () => {
 					onSubmit={handleSignUpFormSubmit}
 					validationSchema={SignUpFormSchema}
 				>
-					{({ errors, touched }) => (
+					{({ errors, touched, isSubmitting }) => (
 						<Form>
 							<SignUpFormFieldset>
 								<SignUpFormLegend>Subscribe to the Newsletter</SignUpFormLegend>
@@ -797,7 +817,7 @@ export const NewsletterSignUpForm: FC = () => {
 										isInputValid={!(errors.emailAddress && touched.emailAddress)}
 									/>
 									<AnimatePresence>
-										{errors.emailAddress && touched.emailAddress ? (
+										{errors.emailAddress && touched.emailAddress && (
 											<motion.p
 												initial={{ opacity: 0, x: -10 }}
 												animate={{ opacity: 1, x: 0 }}
@@ -807,10 +827,24 @@ export const NewsletterSignUpForm: FC = () => {
 											>
 												{errors.emailAddress}
 											</motion.p>
-										) : null}
+										)}
+										{!(errors.emailAddress && touched.emailAddress) &&
+											signUpFormState === "unsubmitted" && (
+												<motion.p
+													initial={{ opacity: 0, x: -10 }}
+													animate={{ opacity: 1, x: 0 }}
+													exit={{ opacity: 0, x: -10 }}
+													transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+													className={styles["error-message"]}
+												>
+													Could not submit form. Try again latter.
+												</motion.p>
+											)}
 									</AnimatePresence>
 								</SignUpFormField>
-								<Button type="submit">Subscribe to monthly newsletter</Button>
+								<Button type="submit" disabled={isSubmitting}>
+									Subscribe to monthly newsletter
+								</Button>
 							</SignUpFormFieldset>
 						</Form>
 					)}

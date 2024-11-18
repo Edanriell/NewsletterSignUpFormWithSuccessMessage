@@ -744,12 +744,10 @@ const NewsletterSignUpFormSubscriptionBenefitsListCheckmarkIcon: FC = () => {
 };
 
 export const NewsletterSignUpForm: FC = () => {
-	const [signUpFormState, setSignUpFormState] = useState<"idle" | "submitted" | "unsubmitted">(
-		"idle"
-	);
+	const [signUpFormState, setSignUpFormState] = useState<
+		"idle" | "submitting" | "submitted" | "unsubmitted"
+	>("idle");
 	const [errorMessage, setErrorMessage] = useState<string>("");
-
-	const initialSignUpFormValues: SignUpFormValues = { emailAddress: "" };
 
 	useEffect(() => {
 		if (signUpFormState === "unsubmitted") {
@@ -760,18 +758,29 @@ export const NewsletterSignUpForm: FC = () => {
 		}
 	}, [signUpFormState]);
 
+	const buttonStateMap = {
+		idle: "idle",
+		submitting: "loading",
+		submitted: "success",
+		unsubmitted: "failure"
+	};
+
+	const initialSignUpFormValues: SignUpFormValues = { emailAddress: "" };
+
 	const handleSignUpFormSubmit = async (
 		values: SignUpFormValues,
 		actions: FormikHelpers<{ emailAddress: string }>
 	) => {
+		setSignUpFormState("submitting");
+
 		try {
 			const { emailAddress } = values;
 			await createNewsletter({ emailAddress });
 
 			setSignUpFormState("submitted");
 		} catch (error) {
-			setSignUpFormState("unsubmitted");
 			setErrorMessage(extractErrorMessage((error as Error).message));
+			setSignUpFormState("unsubmitted");
 		} finally {
 			actions.setSubmitting(false);
 		}
@@ -845,7 +854,11 @@ export const NewsletterSignUpForm: FC = () => {
 											)}
 									</AnimatePresence>
 								</SignUpFormField>
-								<Button type="submit" disabled={isSubmitting}>
+								<Button
+									type="submit"
+									disabled={isSubmitting || signUpFormState === "unsubmitted"}
+									state={buttonStateMap[signUpFormState]}
+								>
 									Subscribe to monthly newsletter
 								</Button>
 							</SignUpFormFieldset>

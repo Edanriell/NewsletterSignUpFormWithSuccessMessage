@@ -1,17 +1,36 @@
-import type { ComponentPropsWithoutRef } from "react";
-import { FC, ReactNode } from "react";
-import type { MotionProps } from "framer-motion";
-import { motion } from "framer-motion";
+import { ComponentPropsWithoutRef, FC, ReactNode, useEffect, useState } from "react";
+import { AnimatePresence, motion, MotionProps } from "framer-motion";
+
+import { Spinner } from "@shared/ui/spinner/ui";
 
 import styles from "./styles.module.less";
 
 type ButtonProps = {
+	state?: string;
 	type?: "submit" | "reset" | "button";
 	children?: ReactNode;
 } & ComponentPropsWithoutRef<"button"> &
 	MotionProps;
 
-export const Button: FC<ButtonProps> = ({ type = "button", children, ...rest }) => {
+export const Button: FC<ButtonProps> = ({ state, type = "button", children, ...rest }) => {
+	const [buttonState, setButtonState] = useState<"idle" | "loading" | "success" | "failure">(
+		"idle"
+	);
+
+	const buttonContent = {
+		idle: children,
+		loading: <Spinner size={23} color="rgba(255, 255, 255)" />,
+		success: "Subscribed successfully!",
+		failure: "Subscription failed!"
+	};
+
+	useEffect(() => {
+		if (state === "idle") setButtonState("idle");
+		if (state === "loading") setButtonState("loading");
+		if (state === "success") setButtonState("success");
+		if (state === "failure") setButtonState("failure");
+	}, [state]);
+
 	return (
 		<motion.button
 			{...rest}
@@ -30,7 +49,18 @@ export const Button: FC<ButtonProps> = ({ type = "button", children, ...rest }) 
 			type={type}
 			className={styles.button}
 		>
-			{children}
+			<AnimatePresence mode="popLayout" initial={false}>
+				<motion.span
+					className={styles["button__content"]}
+					transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+					initial={{ opacity: 0, y: -25 }}
+					animate={{ opacity: 1, y: 0 }}
+					exit={{ opacity: 0, y: 25 }}
+					key={buttonState}
+				>
+					{buttonContent[buttonState]}
+				</motion.span>
+			</AnimatePresence>
 		</motion.button>
 	);
 };

@@ -21,7 +21,11 @@ import {
 	SignUpFormFieldset,
 	SignUpFormLabel,
 	SignUpFormLegend,
-	StyledNewsletterSignUpForm
+	StyledNewsletterSignUpForm,
+	StyledNewsletterSignUpFormSubscriptionSuccessMessage,
+	StyledNewsletterSignUpFormSubscriptionSuccessMessageContent,
+	StyledNewsletterSignUpFormSubscriptionSuccessMessageText,
+	StyledNewsletterSignUpFormSubscriptionSuccessMessageTitle
 } from "./styles";
 import styles from "./styles.module.less";
 
@@ -743,6 +747,36 @@ const NewsletterSignUpFormSubscriptionBenefitsListCheckmarkIcon: FC = () => {
 	);
 };
 
+const NewsletterSignUpFormSubscriptionSuccessIcon: FC = () => {
+	return (
+		<svg
+			style={{ flex: "0 0 auto" }}
+			shapeRendering="geometricPrecision"
+			width="64"
+			height="64"
+			viewBox="0 0 64 64"
+			fill="none"
+			xmlns="http://www.w3.org/2000/svg"
+		>
+			<circle cx="32" cy="32" r="32" fill="url(#paint0_linear_26_846)" />
+			<path d="M18.2856 34.6855L26.6198 42.6667L45.7142 24.381" stroke="white" strokeWidth="4" />
+			<defs>
+				<linearGradient
+					id="paint0_linear_26_846"
+					x1="64"
+					y1="-3.47137e-06"
+					x2="28.8976"
+					y2="77.1484"
+					gradientUnits="userSpaceOnUse"
+				>
+					<stop stopColor="#FF6A3A" />
+					<stop offset="1" stopColor="#FF527B" />
+				</linearGradient>
+			</defs>
+		</svg>
+	);
+};
+
 export const NewsletterSignUpForm: FC = () => {
 	const [signUpFormState, setSignUpFormState] = useState<
 		"idle" | "submitting" | "submitted" | "unsubmitted"
@@ -787,61 +821,50 @@ export const NewsletterSignUpForm: FC = () => {
 	};
 
 	return (
-		<StyledNewsletterSignUpForm>
-			<NewsletterSignUpFormImage>
-				<NewsletterSignUpFormSvgImage />
-			</NewsletterSignUpFormImage>
-			<NewsletterSignUpFormContent>
-				<NewsletterSignUpFormTitle>Stay updated!</NewsletterSignUpFormTitle>
-				<NewsletterSignUpFormText>
-					Join 60,000+ product managers receiving monthly updates on:
-				</NewsletterSignUpFormText>
-				<NewsletterSignUpFormSubscriptionBenefitsList>
-					<NewsletterSignUpFormSubscriptionBenefitsListItem>
-						<NewsletterSignUpFormSubscriptionBenefitsListCheckmarkIcon />
-						Product discovery and building what matters
-					</NewsletterSignUpFormSubscriptionBenefitsListItem>
-					<NewsletterSignUpFormSubscriptionBenefitsListItem>
-						<NewsletterSignUpFormSubscriptionBenefitsListCheckmarkIcon />
-						Measuring to ensure updates are a success
-					</NewsletterSignUpFormSubscriptionBenefitsListItem>
-					<NewsletterSignUpFormSubscriptionBenefitsListItem>
-						<NewsletterSignUpFormSubscriptionBenefitsListCheckmarkIcon />
-						And much more!
-					</NewsletterSignUpFormSubscriptionBenefitsListItem>
-				</NewsletterSignUpFormSubscriptionBenefitsList>
-				<Formik
-					initialValues={initialSignUpFormValues}
-					onSubmit={handleSignUpFormSubmit}
-					validationSchema={SignUpFormSchema}
-				>
-					{({ errors, touched, isSubmitting }) => (
-						<Form>
-							<SignUpFormFieldset>
-								<SignUpFormLegend>Subscribe to the Newsletter</SignUpFormLegend>
-								<SignUpFormField>
-									<SignUpFormLabel htmlFor="emailAddress">Email address</SignUpFormLabel>
-									<Input
-										id="emailAddress"
-										name="emailAddress"
-										type="email"
-										placeholder="email@company.com"
-										isInputValid={!(errors.emailAddress && touched.emailAddress)}
-									/>
-									<AnimatePresence>
-										{errors.emailAddress && touched.emailAddress && (
-											<motion.p
-												initial={{ opacity: 0, x: -10 }}
-												animate={{ opacity: 1, x: 0 }}
-												exit={{ opacity: 0, x: -10 }}
-												transition={{ type: "spring", duration: 0.3, bounce: 0 }}
-												className={styles["error-message"]}
-											>
-												{errors.emailAddress}
-											</motion.p>
-										)}
-										{!(errors.emailAddress && touched.emailAddress) &&
-											signUpFormState === "unsubmitted" && (
+		<Fragment>
+			<StyledNewsletterSignUpForm>
+				<NewsletterSignUpFormImage>
+					<NewsletterSignUpFormSvgImage />
+				</NewsletterSignUpFormImage>
+				<NewsletterSignUpFormContent>
+					<NewsletterSignUpFormTitle>Stay updated!</NewsletterSignUpFormTitle>
+					<NewsletterSignUpFormText>
+						Join 60,000+ product managers receiving monthly updates on:
+					</NewsletterSignUpFormText>
+					<NewsletterSignUpFormSubscriptionBenefitsList>
+						<NewsletterSignUpFormSubscriptionBenefitsListItem>
+							<NewsletterSignUpFormSubscriptionBenefitsListCheckmarkIcon />
+							Product discovery and building what matters
+						</NewsletterSignUpFormSubscriptionBenefitsListItem>
+						<NewsletterSignUpFormSubscriptionBenefitsListItem>
+							<NewsletterSignUpFormSubscriptionBenefitsListCheckmarkIcon />
+							Measuring to ensure updates are a success
+						</NewsletterSignUpFormSubscriptionBenefitsListItem>
+						<NewsletterSignUpFormSubscriptionBenefitsListItem>
+							<NewsletterSignUpFormSubscriptionBenefitsListCheckmarkIcon />
+							And much more!
+						</NewsletterSignUpFormSubscriptionBenefitsListItem>
+					</NewsletterSignUpFormSubscriptionBenefitsList>
+					<Formik
+						initialValues={initialSignUpFormValues}
+						onSubmit={handleSignUpFormSubmit}
+						validationSchema={SignUpFormSchema}
+					>
+						{({ errors, touched, isSubmitting }) => (
+							<Form>
+								<SignUpFormFieldset>
+									<SignUpFormLegend>Subscribe to the Newsletter</SignUpFormLegend>
+									<SignUpFormField>
+										<SignUpFormLabel htmlFor="emailAddress">Email address</SignUpFormLabel>
+										<Input
+											id="emailAddress"
+											name="emailAddress"
+											type="email"
+											placeholder="email@company.com"
+											isInputValid={!(errors.emailAddress && touched.emailAddress)}
+										/>
+										<AnimatePresence>
+											{errors.emailAddress && touched.emailAddress && (
 												<motion.p
 													initial={{ opacity: 0, x: -10 }}
 													animate={{ opacity: 1, x: 0 }}
@@ -849,23 +872,49 @@ export const NewsletterSignUpForm: FC = () => {
 													transition={{ type: "spring", duration: 0.3, bounce: 0 }}
 													className={styles["error-message"]}
 												>
-													{errorMessage}
+													{errors.emailAddress}
 												</motion.p>
 											)}
-									</AnimatePresence>
-								</SignUpFormField>
-								<Button
-									type="submit"
-									disabled={isSubmitting || signUpFormState === "unsubmitted"}
-									state={buttonStateMap[signUpFormState]}
-								>
-									Subscribe to monthly newsletter
-								</Button>
-							</SignUpFormFieldset>
-						</Form>
-					)}
-				</Formik>
-			</NewsletterSignUpFormContent>
-		</StyledNewsletterSignUpForm>
+											{!(errors.emailAddress && touched.emailAddress) &&
+												signUpFormState === "unsubmitted" && (
+													<motion.p
+														initial={{ opacity: 0, x: -10 }}
+														animate={{ opacity: 1, x: 0 }}
+														exit={{ opacity: 0, x: -10 }}
+														transition={{ type: "spring", duration: 0.3, bounce: 0 }}
+														className={styles["error-message"]}
+													>
+														{errorMessage}
+													</motion.p>
+												)}
+										</AnimatePresence>
+									</SignUpFormField>
+									<Button
+										type="submit"
+										disabled={isSubmitting || signUpFormState === "unsubmitted"}
+										state={buttonStateMap[signUpFormState]}
+									>
+										Subscribe to monthly newsletter
+									</Button>
+								</SignUpFormFieldset>
+							</Form>
+						)}
+					</Formik>
+				</NewsletterSignUpFormContent>
+			</StyledNewsletterSignUpForm>
+			<StyledNewsletterSignUpFormSubscriptionSuccessMessage>
+				<StyledNewsletterSignUpFormSubscriptionSuccessMessageContent>
+					<NewsletterSignUpFormSubscriptionSuccessIcon />
+					<StyledNewsletterSignUpFormSubscriptionSuccessMessageTitle>
+						Thanks for subscribing!
+					</StyledNewsletterSignUpFormSubscriptionSuccessMessageTitle>
+					<StyledNewsletterSignUpFormSubscriptionSuccessMessageText>
+						A confirmation email has been sent to <strong>ash@loremcompany.com</strong>. Please open
+						it and click the button inside to confirm your subscription
+					</StyledNewsletterSignUpFormSubscriptionSuccessMessageText>
+				</StyledNewsletterSignUpFormSubscriptionSuccessMessageContent>
+				<Button type="button">Dismiss message</Button>
+			</StyledNewsletterSignUpFormSubscriptionSuccessMessage>
+		</Fragment>
 	);
 };

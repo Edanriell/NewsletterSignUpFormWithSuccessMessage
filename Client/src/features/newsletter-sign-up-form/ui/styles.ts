@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledNewsletterSignUpForm = styled.article`
 	position: relative;
-	display: none;
+	display: none !important;
 
 	@media (width >= 1440px) {
 		border-radius: 36rem;
@@ -125,6 +125,16 @@ export const StyledNewsletterSignUpFormSubscriptionSuccessMessage = styled.artic
 	flex-direction: column;
 	justify-content: space-between;
 	min-height: 100vh;
+
+	@media (width >= 1440px) {
+		border-radius: 36rem;
+		max-width: 504rem;
+		box-shadow: 0 15rem 60rem 0 rgba(0, 0, 0, 0.25);
+		background: var(--white);
+		padding: 48rem 64rem 64rem 64rem;
+		min-height: unset;
+		justify-content: unset;
+	}
 `;
 
 export const StyledNewsletterSignUpFormSubscriptionSuccessMessageContent = styled.div`
@@ -139,6 +149,10 @@ export const StyledNewsletterSignUpFormSubscriptionSuccessMessageTitle = styled.
 	line-height: 100%;
 	color: var(--dark-navy);
 	margin-top: 40rem;
+
+	@media (width >= 1440px) {
+		font-size: 56rem;
+	}
 `;
 
 export const StyledNewsletterSignUpFormSubscriptionSuccessMessageText = styled.p`
@@ -155,5 +169,9 @@ export const StyledNewsletterSignUpFormSubscriptionSuccessMessageText = styled.p
 		line-height: 150%;
 		color: var(--dark-navy);
 		font-weight: 700;
+	}
+
+	@media (width >= 1440px) {
+		margin-bottom: 40rem;
 	}
 `;

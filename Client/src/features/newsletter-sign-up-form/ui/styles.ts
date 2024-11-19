@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const StyledNewsletterSignUpForm = styled.article`
 	position: relative;
+	display: none;
 
 	@media (width >= 1440px) {
 		border-radius: 36rem;
@@ -82,10 +83,6 @@ export const NewsletterSignUpFormSubscriptionBenefitsListItem = styled.li`
 	color: var(--dark-navy);
 `;
 
-export const SignUpForm = styled.form`
-	position: relative;
-`;
-
 export const SignUpFormFieldset = styled.fieldset`
 	margin: unset;
 	padding: unset;
@@ -121,49 +118,42 @@ export const SignUpFormLabel = styled.label`
 	color: var(--dark-navy);
 `;
 
-export const SignUpFormEmailInput = styled.input`
-	border: 1rem solid var(--grey-25);
-	border-radius: 8rem;
-	width: 100%;
-	background: #fff;
-	padding: 16rem 24rem;
-	font-family: var(--second-family), sans-serif;
+export const StyledNewsletterSignUpFormSubscriptionSuccessMessage = styled.article`
+	position: relative;
+	padding: 149rem 24rem 40rem 24rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	min-height: 100vh;
+`;
+
+export const StyledNewsletterSignUpFormSubscriptionSuccessMessageContent = styled.div`
+	display: flex;
+	flex-direction: column;
+`;
+
+export const StyledNewsletterSignUpFormSubscriptionSuccessMessageTitle = styled.h2`
+	font-family: var(--font-family), sans-serif;
+	font-weight: 700;
+	font-size: 40rem;
+	line-height: 100%;
+	color: var(--dark-navy);
+	margin-top: 40rem;
+`;
+
+export const StyledNewsletterSignUpFormSubscriptionSuccessMessageText = styled.p`
+	font-family: var(--font-family), sans-serif;
 	font-weight: 400;
 	font-size: 16rem;
 	line-height: 150%;
 	color: var(--dark-navy);
+	margin-top: 24rem;
 
-	&::placeholder {
+	> strong {
 		font-family: var(--font-family), sans-serif;
-		font-weight: 400;
 		font-size: 16rem;
 		line-height: 150%;
 		color: var(--dark-navy);
-		opacity: 0.5;
+		font-weight: 700;
 	}
-`;
-
-export const Button = styled.button`
-	border-radius: 8rem;
-	width: 100%;
-	background: var(--dark-navy);
-	text-align: center;
-	font-family: var(--font-family), sans-serif;
-	font-weight: 700;
-	font-size: 16rem;
-	line-height: 150%;
-	color: var(--white);
-	padding: 18rem 0 14rem 0;
-	cursor: pointer;
-`;
-
-export const ErrorMessage = styled.p`
-	font-family: var(--font-family), sans-serif;
-	font-weight: 700;
-	font-size: 12rem;
-	line-height: 150%;
-	color: var(--vermellion);
-	position: absolute;
-	top: 0;
-	right: 0;
 `;

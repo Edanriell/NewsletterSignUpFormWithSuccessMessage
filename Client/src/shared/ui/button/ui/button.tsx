@@ -33,6 +33,7 @@ export const Button: FC<ButtonProps> = ({ state, type = "button", children, ...r
 
 	return (
 		<motion.button
+			layout
 			{...rest}
 			initial={{ background: "linear-gradient(225deg, #242742 0%, #242742 100%)" }}
 			whileHover={{

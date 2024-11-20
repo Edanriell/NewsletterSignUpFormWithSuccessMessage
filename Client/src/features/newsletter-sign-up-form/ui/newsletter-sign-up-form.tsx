@@ -736,6 +736,8 @@ const NewsletterSignUpFormSubscriptionSuccessIcon: FC = () => {
 	return (
 		<motion.svg
 			layout
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
 			style={{ flex: "0 0 auto" }}
 			shapeRendering="geometricPrecision"
 			width="64"
@@ -818,7 +820,7 @@ export const NewsletterSignUpForm: FC = () => {
 					layoutId="newsletter-sign-up-form"
 					className={styles["newsletter-sign-up-form-subscription-success-message"]}
 				>
-					<motion.div layout>
+					<motion.div>
 						<NewsletterSignUpFormSubscriptionSuccessIcon />
 						<motion.h2
 							layout
@@ -834,7 +836,7 @@ export const NewsletterSignUpForm: FC = () => {
 							open it and click the button inside to confirm your subscription
 						</motion.p>
 					</motion.div>
-					<Button type="button" onClick={handleDismissMessageButtonClick}>
+					<Button layout type="button" onClick={handleDismissMessageButtonClick}>
 						Dismiss message
 					</Button>
 				</motion.article>
@@ -844,10 +846,17 @@ export const NewsletterSignUpForm: FC = () => {
 					layoutId="newsletter-sign-up-form"
 					className={styles["newsletter-sign-up-form"]}
 				>
-					<motion.div layout className={styles["newsletter-sign-up-form__image-wrapper"]}>
-						<NewsletterSignUpFormSvgImage />
-					</motion.div>
-					<motion.div layout className={styles["newsletter-sign-up-form__content"]}>
+					<Fragment>
+						<motion.div
+							layout
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							className={styles["newsletter-sign-up-form__image-wrapper"]}
+						>
+							<NewsletterSignUpFormSvgImage />
+						</motion.div>
+					</Fragment>
+					<motion.div className={styles["newsletter-sign-up-form__content"]}>
 						<motion.h2 layout className={styles["newsletter-sign-up-form__title"]}>
 							Stay updated!
 						</motion.h2>
@@ -859,21 +868,18 @@ export const NewsletterSignUpForm: FC = () => {
 							className={styles["newsletter-sign-up-form__subscription-benefits-list"]}
 						>
 							<motion.li
-								layout
 								className={styles["newsletter-sign-up-form__subscription-benefits-list-item"]}
 							>
 								<NewsletterSignUpFormSubscriptionBenefitsListCheckmarkIcon />
 								Product discovery and building what matters
 							</motion.li>
 							<motion.li
-								layout
 								className={styles["newsletter-sign-up-form__subscription-benefits-list-item"]}
 							>
 								<NewsletterSignUpFormSubscriptionBenefitsListCheckmarkIcon />
 								Measuring to ensure updates are a success
 							</motion.li>
 							<motion.li
-								layout
 								className={styles["newsletter-sign-up-form__subscription-benefits-list-item"]}
 							>
 								<NewsletterSignUpFormSubscriptionBenefitsListCheckmarkIcon />
@@ -888,12 +894,11 @@ export const NewsletterSignUpForm: FC = () => {
 							{({ errors, touched, isSubmitting }) => (
 								<Form>
 									<motion.fieldset layout className={styles["sign-up-form__fieldset"]}>
-										<motion.legend layout className={styles["sign-up-form__legend"]}>
+										<motion.legend className={styles["sign-up-form__legend"]}>
 											Subscribe to the Newsletter
 										</motion.legend>
-										<motion.div layout className={styles["sign-up-form__field"]}>
+										<motion.div className={styles["sign-up-form__field"]}>
 											<motion.label
-												layout
 												className={styles["sign-up-form__label"]}
 												htmlFor="emailAddress"
 											>
@@ -941,6 +946,7 @@ export const NewsletterSignUpForm: FC = () => {
 											</AnimatePresence>
 										</motion.div>
 										<Button
+											layout
 											type="submit"
 											disabled={isSubmitting || signUpFormState === "unsubmitted"}
 											state={buttonStateMap[signUpFormState]}

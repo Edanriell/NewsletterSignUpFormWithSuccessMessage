@@ -24,6 +24,17 @@ export const NewsletterSignUpForm: FC = () => {
 		"idle" | "submitting" | "submitted" | "unsubmitted"
 	>("idle");
 	const [errorMessage, setErrorMessage] = useState<string>("");
+	const [submittedEmail, setSubmittedEmail] = useState<string>("");
+
+	useEffect(() => {
+		const submittedEmail = localStorage.getItem("submittedEmail");
+
+		console.log(submittedEmail);
+
+		if (submittedEmail) {
+			setSignUpFormState("submitted");
+		}
+	}, []);
 
 	useEffect(() => {
 		if (signUpFormState === "unsubmitted") {
@@ -54,6 +65,9 @@ export const NewsletterSignUpForm: FC = () => {
 			await createNewsletter({ emailAddress });
 
 			setSignUpFormState("submitted");
+			setSubmittedEmail(emailAddress);
+
+			localStorage.setItem("submittedEmail", emailAddress);
 		} catch (error) {
 			setErrorMessage(extractErrorMessage((error as Error).message));
 			setSignUpFormState("unsubmitted");
@@ -64,38 +78,54 @@ export const NewsletterSignUpForm: FC = () => {
 
 	const handleDismissMessageButtonClick = () => {
 		setSignUpFormState("idle");
+		setSubmittedEmail("");
+
+		localStorage.clear();
 	};
 
 	return (
 		<Fragment>
-			{signUpFormState === "submitted" ? (
+			{signUpFormState === "submitted" && (
 				<motion.article
 					transition={{ type: "spring", duration: 0.5, bounce: 0 }}
-					layout
 					layoutId="newsletter-sign-up-form"
 					className={styles["newsletter-sign-up-form-subscription-success-message"]}
+					style={{
+						transformOrigin: "center",
+						perspectiveOrigin: "center",
+						maskOrigin: "stroke-box"
+					}}
 				>
-					<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} layout>
-						<NewsletterSignUpFormSubscriptionSuccessIcon />
-						<motion.h2
-							layout
-							className={styles["newsletter-sign-up-form-subscription-success-message__title"]}
-						>
-							Thanks for subscribing!
-						</motion.h2>
-						<motion.p
-							layout
-							className={styles["newsletter-sign-up-form-subscription-success-message__text"]}
-						>
-							A confirmation email has been sent to <strong>ash@loremcompany.com</strong>. Please
-							open it and click the button inside to confirm your subscription
-						</motion.p>
-					</motion.div>
-					<Button layout type="button" onClick={handleDismissMessageButtonClick}>
+					<NewsletterSignUpFormSubscriptionSuccessIcon />
+					<motion.h2
+						layout
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						className={styles["newsletter-sign-up-form-subscription-success-message__title"]}
+					>
+						Thanks for subscribing!
+					</motion.h2>
+					<motion.p
+						layout
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						className={styles["newsletter-sign-up-form-subscription-success-message__text"]}
+					>
+						A confirmation email has been sent to <strong>{submittedEmail}</strong>. Please open it
+						and click the button inside to confirm your subscription
+					</motion.p>
+					<Button
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						layout
+						type="button"
+						onClick={handleDismissMessageButtonClick}
+					>
 						Dismiss message
 					</Button>
 				</motion.article>
-			) : (
+			)}
+			{signUpFormState !== "submitted" && (
 				<motion.article
 					transition={{ type: "spring", duration: 0.5, bounce: 0 }}
 					layout

@@ -816,11 +816,12 @@ export const NewsletterSignUpForm: FC = () => {
 		<Fragment>
 			{signUpFormState === "submitted" ? (
 				<motion.article
+					transition={{ type: "spring", duration: 0.5, bounce: 0 }}
 					layout
 					layoutId="newsletter-sign-up-form"
 					className={styles["newsletter-sign-up-form-subscription-success-message"]}
 				>
-					<motion.div>
+					<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} layout>
 						<NewsletterSignUpFormSubscriptionSuccessIcon />
 						<motion.h2
 							layout
@@ -842,6 +843,7 @@ export const NewsletterSignUpForm: FC = () => {
 				</motion.article>
 			) : (
 				<motion.article
+					transition={{ type: "spring", duration: 0.5, bounce: 0 }}
 					layout
 					layoutId="newsletter-sign-up-form"
 					className={styles["newsletter-sign-up-form"]}
@@ -856,7 +858,12 @@ export const NewsletterSignUpForm: FC = () => {
 							<NewsletterSignUpFormSvgImage />
 						</motion.div>
 					</Fragment>
-					<motion.div className={styles["newsletter-sign-up-form__content"]}>
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						layout
+						className={styles["newsletter-sign-up-form__content"]}
+					>
 						<motion.h2 layout className={styles["newsletter-sign-up-form__title"]}>
 							Stay updated!
 						</motion.h2>

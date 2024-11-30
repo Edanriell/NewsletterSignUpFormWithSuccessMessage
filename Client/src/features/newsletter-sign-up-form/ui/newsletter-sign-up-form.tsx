@@ -99,24 +99,24 @@ export const NewsletterSignUpForm: FC = () => {
 					<NewsletterSignUpFormSubscriptionSuccessIcon />
 					<motion.h2
 						layout
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
+						initial={{ opacity: 0, filter: "blur(4px)" }}
+						animate={{ opacity: 1, filter: "blur(0px)" }}
 						className={styles["newsletter-sign-up-form-subscription-success-message__title"]}
 					>
 						Thanks for subscribing!
 					</motion.h2>
 					<motion.p
 						layout
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
+						initial={{ opacity: 0, filter: "blur(4px)" }}
+						animate={{ opacity: 1, filter: "blur(0px)" }}
 						className={styles["newsletter-sign-up-form-subscription-success-message__text"]}
 					>
 						A confirmation email has been sent to <strong>{submittedEmail}</strong>. Please open it
 						and click the button inside to confirm your subscription
 					</motion.p>
 					<Button
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
+						initial={{ opacity: 0, filter: "blur(4px)" }}
+						animate={{ opacity: 1, filter: "blur(0px)" }}
 						layout
 						type="button"
 						onClick={handleDismissMessageButtonClick}
@@ -135,16 +135,16 @@ export const NewsletterSignUpForm: FC = () => {
 					<Fragment>
 						<motion.div
 							layout
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
+							initial={{ opacity: 0, filter: "blur(4px)" }}
+							animate={{ opacity: 1, filter: "blur(0px)" }}
 							className={styles["newsletter-sign-up-form__image-wrapper"]}
 						>
 							<NewsletterSignUpFormSvgImage />
 						</motion.div>
 					</Fragment>
 					<motion.div
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
+						initial={{ opacity: 0, filter: "blur(4px)" }}
+						animate={{ opacity: 1, filter: "blur(0px)" }}
 						layout
 						className={styles["newsletter-sign-up-form__content"]}
 					>
